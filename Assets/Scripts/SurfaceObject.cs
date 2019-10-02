@@ -31,7 +31,6 @@ public class SurfaceObject : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            Player.SetGrounded(true);
             Player.ClearGround();
             Player.SetGroundNormal(transform);
             isCurrentlyFloor = true;
@@ -42,7 +41,6 @@ public class SurfaceObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Player.SetGrounded(false);
             isCurrentlyFloor = false;
         }
     }

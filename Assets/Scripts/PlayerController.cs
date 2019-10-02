@@ -7,9 +7,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SwingMechanics HookShot;
     [SerializeField] private Transform RespawnAnchor;
 
+    public static PlayerController player;
+
     private Rigidbody PlayerRb = null;
     private Camera MainCamera = null;
-    [SerializeField] private bool isGrounded = false;
+    [SerializeField] private bool isGrounded;
 
     [SerializeField] private float ForceX, ForceY, ForceZ, jumpForce;
     [SerializeField] private float maxForceX, maxForceY, maxForceZ;
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        player = this;
         PlayerRb = GetComponent<Rigidbody>();
         MainCamera = Camera.main;
         GroundNormal = GameObject.FindGameObjectWithTag("Initial Ground").transform;
@@ -112,6 +115,12 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = grounded;
     }
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
+    }
+
 
     public void SetGroundNormal(Transform tr)
     {

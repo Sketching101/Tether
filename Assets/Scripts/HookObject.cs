@@ -16,6 +16,8 @@ public class HookObject : MonoBehaviour
     public Rigidbody attachedTo = null;
     private Rigidbody hookRb = null;
 
+    [SerializeField] private AimHookshot AimHookScript;
+
     void Awake()
     {
         hookRb = GetComponent<Rigidbody>();
@@ -34,13 +36,20 @@ public class HookObject : MonoBehaviour
     public void LaunchHook(Vector3 Direction)
     {
         hookRb.isKinematic = false;
-        hookRb.useGravity = true;
+        hookRb.useGravity = false;
 
         inGun = false;
         testFire = false;
         transform.position = StartFrom.transform.position;
 
-        hookRb.AddForce(Direction * LaunchForce);
+        Vector3 Dir;
+
+        if (AimHookScript.GetHookTargetPosition() != new Vector3(0, 0, 0))
+            Dir = AimHookScript.GetHookTargetPosition().normalized;
+        else
+            Dir = Direction;
+
+        hookRb.AddForce(Dir * LaunchForce);
     }
 
     public void DetachHook()

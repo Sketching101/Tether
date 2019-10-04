@@ -61,6 +61,16 @@ public class AimHookshot : MonoBehaviour
 
     public Vector3 GetHookTargetPosition()
     {
+        // Layer 8 is defined as "Hookshotable" so we want layerMask to represent only that layer
+        return MainCamera.transform.forward;
+        int layerMask = 1 << 8;
+        RaycastHit hit;
+        Ray VirtualRay = MainCamera.ScreenPointToRay(AimReticleReal.position);
+        if (Physics.Raycast(VirtualRay, out hit, 200.0f, layerMask))
+        {
+            Vector3 TargetWorldPosition = hit.point - HookShotGun.position;
+            return TargetWorldPosition;
+        }
         return PlayerToTarget;
     }
 }

@@ -10,10 +10,13 @@ public class AimHookshot : MonoBehaviour
     /// and the reticle that the hook will actually fire at
     /// </summary>
     [SerializeField] private RectTransform AimReticleReal;
+    [SerializeField] private RectTransform AimReticleVirtual;
 
     [Header("Other Important Anchors")]
     [SerializeField] private Camera MainCamera = null;
     [SerializeField] private Transform HookShotGun;
+
+    float x, y;
 
     private Vector3 PlayerToTarget;
 
@@ -26,6 +29,9 @@ public class AimHookshot : MonoBehaviour
     void Update()
     {
         UpdateRealReticle();
+
+        x += Input.GetAxis("Mouse X");
+        y += Input.GetAxis("Mouse Y");
     }
 
      void FixedUpdate()
@@ -62,7 +68,6 @@ public class AimHookshot : MonoBehaviour
     public Vector3 GetHookTargetPosition()
     {
         // Layer 8 is defined as "Hookshotable" so we want layerMask to represent only that layer
-        return MainCamera.transform.forward;
         int layerMask = 1 << 8;
         RaycastHit hit;
         Ray VirtualRay = MainCamera.ScreenPointToRay(AimReticleReal.position);
